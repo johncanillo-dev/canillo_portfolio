@@ -72,13 +72,24 @@ if (contactForm) {
         // Get form values
         const name = contactForm.querySelector('input[type="text"]').value;
         const email = contactForm.querySelector('input[type="email"]').value;
+        const subject = contactForm.querySelectorAll('input[type="text"]')[1]?.value || '';
         const message = contactForm.querySelector('textarea').value;
         
         // Simple validation
         if (name && email && message) {
-            // Show success message
-            alert(`Thank you, ${name}! Your message has been sent. We'll get back to you soon.`);
+            // Create success message
+            const successMsg = document.createElement('div');
+            successMsg.style.cssText = 'background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #c3e6cb;';
+            successMsg.textContent = `Thank you, ${name}! Your message has been sent successfully. We'll get back to you soon.`;
+            contactForm.insertBefore(successMsg, contactForm.firstChild);
+            
+            // Clear form
             contactForm.reset();
+            
+            // Remove success message after 5 seconds
+            setTimeout(() => {
+                successMsg.remove();
+            }, 5000);
         } else {
             alert('Please fill in all fields');
         }
